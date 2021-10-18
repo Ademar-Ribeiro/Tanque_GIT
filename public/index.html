@@ -1,0 +1,59 @@
+<!-- Complete Project Details at: https://RandomNerdTutorials.com/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP Firebase App</title>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+    // REPLACE WITH YOUR web app's Firebase configuration
+   // Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBfe8voKhkZX2sEratzomMX1JnfZDmqySA",
+  authDomain: "tanque-unisal.firebaseapp.com",
+  databaseURL: "https://tanque-unisal-default-rtdb.firebaseio.com",
+  projectId: "tanque-unisal",
+  storageBucket: "tanque-unisal.appspot.com",
+  messagingSenderId: "795085807241",
+  appId: "1:795085807241:web:976f14a23ad42076957058"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+</script>
+<script src="app.js" defer></script>
+
+<style>
+body{
+    font: normal 18pt Arial;
+    }
+    body h1{
+    color: blue;
+    }
+    input{
+        font: normal 18pt Times;
+    }
+
+</style>
+
+</head>
+<body>
+    <div></div>
+    <h1>ESP32 Firebase<br> Web App <br>Unisal</h1>
+    <p>Nivel Atual: <span id="reading-int"></span></p>
+    <p>Reading float: <span id="reading-float"></span></p>
+    <input type="number" name="level" id="level" min="0" max="100"> Nível %
+    <input type="button" value="Send"> <br>
+    
+    <input type="number" name="kp" id="kp" min="0" max="999"> KP <br>
+    <input type="number" name="ki" id="ki"> Ki
+</body>
+</html>

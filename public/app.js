@@ -3,7 +3,7 @@
 // Database Paths
 var dataFloatPath = 'test/float';
 var dataIntPath = 'test/int';
-var 
+var dataReadPath ='read';
 
 // Get a database reference 
 const databaseFloat = database.ref(dataFloatPath);
@@ -13,6 +13,7 @@ const databaseInt = database.ref(dataIntPath);
 // Variables to save database current values
 var floatReading;
 var intReading;
+var PV,OV,KP,KI,KD,TI,TD,PT;
 
 // Attach an asynchronous callback to read the data
 databaseFloat.on('value', (snapshot) => {

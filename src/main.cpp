@@ -35,18 +35,19 @@
 //Define Firebase Data object
 FirebaseData fbdo;
 #include <SoftwareSerial.h>
-//SoftwareSerial Myserial(2,3);
+SoftwareSerial Myserial(1,2);
 FirebaseAuth auth;
 FirebaseConfig config;
 
 unsigned long sendDataPrevMillis = 0;
-int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
+int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD,PV;
 bool signupOK = false;
 int intValue;
 float floatValue;
 
 void setup(){
   Serial.begin(115200);
+  Myserial.begin(1200);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED){
@@ -125,10 +126,18 @@ void loop(){
       Serial.println(fbdo.errorReason());
     }
   }
-;
 
 
-  if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || !Firebase.RTDB.setInt(&fbdo, "read/KP", KP) ){
+
+  if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
+  !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
+  !Firebase.RTDB.setInt(&fbdo, "read/KP", KP) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/KD", KD) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/KI", KI) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/TI", TI) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/TD", TD) ||
+  !Firebase.RTDB.setInt(&fbdo, "read/PT", PT)){
      Serial.println("FAILED");
      Serial.println("REASON: " + fbdo.errorReason());
     }

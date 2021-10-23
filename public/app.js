@@ -55,4 +55,34 @@ databasePV.on('value', (snapshot) => {
   PV = snapshot.val()
   document.getElementById("read-PV").innerHTML = PV;
 })
- 
+
+databaseKP.on('value', (snapshot) => {
+  KP = snapshot.val()
+   document.getElementById("read-KP").innerHTML = KP;
+})
+
+databaseKI.on('value', (snapshot) => {
+  KI = snapshot.val()
+  document.getElementById("read-KI").innerHTML = KI;
+})
+
+databaseKD.on('value', (snapshot) => {
+  KD = snapshot.val()
+  document.getElementById("read-KD").innerHTML = KD;
+})
+
+databaseTI.on('value', (snapshot) => {
+  TI = snapshot.val()
+  document.getElementById("read-TI").innerHTML = TI;
+})
+
+databaseTD.on('value', (snapshot) => {
+  TD = snapshot.val()
+  document.getElementById("read-TD").innerHTML = TD;
+})
+
+databasePT.on('value', (snapshot) => {
+   PT = snapshot.val()
+   document.getElementById("read-PT").innerHTML = PT;
+ })
+

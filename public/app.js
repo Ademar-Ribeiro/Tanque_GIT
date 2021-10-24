@@ -112,13 +112,20 @@ databasePT.on('value', (snapshot) => {
  var b_envia_SP = document.getElementById("envia-SP")
 //if(New_Value =='lido'){
  b_envia_KP.addEventListener("click", function() {
+  //document.getElementById("read-KP").innerHTML = '17';
     var dado_lido = Number(window.document.querySelector('input#kp').value)
-    databaseSend.update({KP:dado_lido,New_Value : 'KP'})
+    databaseSend.update({
+      KP:dado_lido,
+      New_Value : 'KP'
+    });
     
  })
 
  b_envia_SP.addEventListener("click", function() {
-  var dado_lido = Number(window.document.querySelector('input#level').value)
-  databaseSend.update({SP:dado_lido,New_Value :'SP'})
+  var dado_lido =Number(window.document.querySelector('input#level').value)
+  databaseSend.update({
+    SP:dado_lido,
+    New_Value :'SP'
+  });
   
 })//}

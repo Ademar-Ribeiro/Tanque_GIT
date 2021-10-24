@@ -40,10 +40,11 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 unsigned long sendDataPrevMillis = 0;
-int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD,PV;
+int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD,PV,FBSP,FBOV,FBKP,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV;
 bool signupOK = false;
 int intValue;
 float floatValue;
+String FBNew_Value = "lido";
 
 void setup(){
   Serial.begin(115200);
@@ -125,10 +126,32 @@ void loop(){
     else {
       Serial.println(fbdo.errorReason());
     }
-  }
-
-
-
+  /////////////////////////////////////////////////////////////////////////
+  ////////INICIO DE ROTINA VERIFICA SE DADO NOVO VINDO DO FIREBASE/////////
+  ////////////////////////////////////////////////////////////////////////
+  if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
+      if (fbdo.dataType() == "string") {
+        FBNew_Value = fbdo.stringData();
+        Serial.println(FBNew_Value);
+        if (FBNew_Value !="lido")
+        {
+         if (FBNew_Value =="KP")
+         {
+           Firebase.RTDB.getInt(&fbdo, "/send/KP");
+           FBKP=fbdo.intData();
+           Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
+           KP=FBKP;
+           Serial.println(FBKP);
+         }
+         //Serial.print(FBNew_Value);
+        }
+        
+      }
+    }
+    else {
+      Serial.println(fbdo.errorReason());
+    }
+  
   if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP + count) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
   !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
   !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
@@ -142,5 +165,5 @@ void loop(){
      Serial.println("REASON: " + fbdo.errorReason());
     }
     
-    
+  } 
 }

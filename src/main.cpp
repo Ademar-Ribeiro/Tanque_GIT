@@ -96,7 +96,8 @@ void loop(){
       Serial.println("REASON: " + fbdo.errorReason());
     }
     count++;
-    
+    ///
+    /////
     // Write an Float number on the database path test/float
     if (Firebase.RTDB.setFloat(&fbdo, "test/float", 0.01 + random(0,100))){
       Serial.println("PASSED");
@@ -163,7 +164,8 @@ void loop(){
   !Firebase.RTDB.setInt(&fbdo, "read/PT", PT)){
      Serial.println("FAILED");
      Serial.println("REASON: " + fbdo.errorReason());
-    }
+     
     
   } 
+  }
 }

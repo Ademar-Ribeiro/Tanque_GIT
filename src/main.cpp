@@ -21,10 +21,17 @@
 #include "addons/TokenHelper.h"
 //Provide the RTDB payload printing info and other helper functions.
 #include "addons/RTDBHelper.h"
+#include <SoftwareSerial.h>
+
 
 // Insert your network credentials
+//#define WIFI_SSID "Galaxy A51D070"
+//#define WIFI_PASSWORD "mwal1973"
 #define WIFI_SSID "Desktop_F3426606"
 #define WIFI_PASSWORD "01483211"
+#define D6 12
+#define D5 14
+SoftwareSerial SSSerial(D6, D5); // RX, TX
 
 // Insert Firebase project API Key
 #define API_KEY "AIzaSyBfe8voKhkZX2sEratzomMX1JnfZDmqySA" /*"AIzaSyAmGo0erkvDRUflLCcQvyIgLvPnGlFO2gA"*/
@@ -32,10 +39,10 @@
 // Insert RTDB URLefine the RTDB URL */
 #define DATABASE_URL "https://tanque-unisal-default-rtdb.firebaseio.com/" /*"https://esp32-firebase-demo-8e068-default-rtdb.firebaseio.com/" */
 
+
+
 //Define Firebase Data object
 FirebaseData fbdo;
-#include <SoftwareSerial.h>
-//SoftwareSerial Myserial(1,2);
 FirebaseAuth auth;
 FirebaseConfig config;
 
@@ -48,7 +55,9 @@ String FBNew_Value = "lido";
 
 void setup(){
   Serial.begin(115200);
-  //Myserial.begin(1200);
+  SSSerial.begin(2400);
+  pinMode(D6,INPUT); //d7 is RX, receiver, so define it as input
+  pinMode(D5,OUTPUT); //d8 is TX, transmitter, so define it as output 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED){
@@ -85,7 +94,7 @@ void setup(){
 void loop(){
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 15000 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
-    // Write an Int number on the database path test/int
+    /* Write an Int number on the database path test/int
     if (Firebase.RTDB.setInt(&fbdo, "test/int", count)){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
@@ -94,11 +103,11 @@ void loop(){
     else {
       Serial.println("FAILED");
       Serial.println("REASON: " + fbdo.errorReason());
-    }
+    }*/
     count++;
     ///
     /////
-    // Write an Float number on the database path test/float
+    /* Write an Float number on the database path test/float
     if (Firebase.RTDB.setFloat(&fbdo, "test/float", 0.01 + random(0,100))){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
@@ -126,46 +135,49 @@ void loop(){
     }
     else {
       Serial.println(fbdo.errorReason());
-    }
+    }*/
   /////////////////////////////////////////////////////////////////////////
   ////////INICIO DE ROTINA VERIFICA SE DADO NOVO VINDO DO FIREBASE/////////
   ////////////////////////////////////////////////////////////////////////
-  if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
-      if (fbdo.dataType() == "string") {
-        FBNew_Value = fbdo.stringData();
-        Serial.println(FBNew_Value);
-        if (FBNew_Value !="lido")
-        {
-         if (FBNew_Value =="KP")
-         {
-           Firebase.RTDB.getInt(&fbdo, "/send/KP");
-           FBKP=fbdo.intData();
-           Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
-           KP=FBKP;
-           Serial.println(FBKP);
-         }
-         //Serial.print(FBNew_Value);
-        }
-        
-      }
-    }
-    else {
-      Serial.println(fbdo.errorReason());
-    }
+          if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
+              if (fbdo.dataType() == "string") {
+                FBNew_Value = fbdo.stringData();
+                Serial.println(FBNew_Value);
+                if (FBNew_Value !="lido")
+                {
+                  Firebase.RTDB.getInt(&fbdo, "/send/"+FBNew_Value);
+                if (FBNew_Value =="KP")FBKP=fbdo.intData();
+                if (FBNew_Value =="SP")FBSP=fbdo.intData();
+                if (FBNew_Value =="KD")FBKD=fbdo.intData();
+                if (FBNew_Value =="KI")FBKI=fbdo.intData();
+                if (FBNew_Value =="TI")FBTI=fbdo.intData();
+                if (FBNew_Value =="TD")FBTD=fbdo.intData();
+                if (FBNew_Value =="PT")FBPT=fbdo.intData();
+                //if (FBNew_Value =="KD")FBKD=fbdo.intData();
+                  Serial.println(fbdo.intData());
+                }
+                
+                }
+                Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
+              }
+              
+              else {
+                Serial.println(fbdo.errorReason());
+              }
   
-  if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
-  !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
-  !Firebase.RTDB.setInt(&fbdo, "read/KP", KP) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/KD", KD) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/KI", KI) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/TI", TI) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/TD", TD) ||
-  !Firebase.RTDB.setInt(&fbdo, "read/PT", PT)){
-     Serial.println("FAILED");
-     Serial.println("REASON: " + fbdo.errorReason());
-     
-    
-  } 
-  }
+          if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
+          !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
+          !Firebase.RTDB.setInt(&fbdo, "read/KP", KP) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/KD", KD) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/KI", KI) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/TI", TI) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/TD", TD) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/PT", PT)){
+            Serial.println("FAILED");
+            Serial.println("REASON: " + fbdo.errorReason());
+          
+          
+        } 
+ }
 }

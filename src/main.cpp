@@ -47,11 +47,13 @@ FirebaseAuth auth;
 FirebaseConfig config;
 
 unsigned long sendDataPrevMillis = 0;
-int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD,PV,FBSP,FBOV,FBKP,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV;
+int count = 0, SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD,PV;
 bool signupOK = false;
 int intValue;
 float floatValue;
-String FBNew_Value = "lido";
+String FBNew_Parameter = "lido";
+String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data;
+
 
 void setup(){
   Serial.begin(115200);
@@ -92,6 +94,11 @@ void setup(){
 }
 
 void loop(){
+  if (SSSerial.available() > 0)
+   {
+     Serial.write(SSSerial.read());
+     
+   }
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 15000 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
     /* Write an Int number on the database path test/int
@@ -103,11 +110,11 @@ void loop(){
     else {
       Serial.println("FAILED");
       Serial.println("REASON: " + fbdo.errorReason());
-    }*/
+    }
     count++;
     ///
     /////
-    /* Write an Float number on the database path test/float
+    Write an Float number on the database path test/float
     if (Firebase.RTDB.setFloat(&fbdo, "test/float", 0.01 + random(0,100))){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
@@ -141,30 +148,43 @@ void loop(){
   ////////////////////////////////////////////////////////////////////////
           if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
               if (fbdo.dataType() == "string") {
-                FBNew_Value = fbdo.stringData();
-                Serial.println(FBNew_Value);
-                if (FBNew_Value !="lido")
+                FBNew_Parameter = fbdo.stringData();
+                Serial.println(".");
+                if (FBNew_Parameter !="lido")
                 {
-                  Firebase.RTDB.getInt(&fbdo, "/send/"+FBNew_Value);
-                if (FBNew_Value =="KP")FBKP=fbdo.intData();
-                if (FBNew_Value =="SP")FBSP=fbdo.intData();
-                if (FBNew_Value =="KD")FBKD=fbdo.intData();
-                if (FBNew_Value =="KI")FBKI=fbdo.intData();
-                if (FBNew_Value =="TI")FBTI=fbdo.intData();
-                if (FBNew_Value =="TD")FBTD=fbdo.intData();
-                if (FBNew_Value =="PT")FBPT=fbdo.intData();
+                  Firebase.RTDB.getString(&fbdo, "/send/"+FBNew_Parameter);
+                  FBNew_Data=fbdo.stringData();             
+                if (FBNew_Parameter =="KP")FBKP=FBNew_Data;
+                if (FBNew_Parameter =="SP")FBSP=FBNew_Data;
+                if (FBNew_Parameter =="KD")FBKD=FBNew_Data;
+                if (FBNew_Parameter =="KI")FBKI=FBNew_Data;
+                if (FBNew_Parameter =="TI")FBTI=FBNew_Data;
+                if (FBNew_Parameter =="TD")FBTD=FBNew_Data;
+                if (FBNew_Parameter =="PT")FBPT=FBNew_Data;
+/*
+                Serial.print(FBNew_Parameter[0]);
+                Serial.print(FBNew_Data[0]);
+                Serial.print(FBNew_Data[1]);
+                Serial.print(FBNew_Data[2]);
+                Serial.println(FBNew_Parameter[1]);*/
                 //if (FBNew_Value =="KD")FBKD=fbdo.intData();
-                  Serial.println(fbdo.intData());
+                // Serial.println(fbdo.stringData());
+                
                 }
                 
                 }
                 Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
+                SSSerial.write(FBNew_Parameter[0]);
+                SSSerial.write(FBNew_Data[0]);
+                SSSerial.write(FBNew_Data[1]);
+                SSSerial.write(FBNew_Data[2]);
+                SSSerial.write(FBNew_Parameter[1]);
               }
               
               else {
                 Serial.println(fbdo.errorReason());
               }
-  
+  //grava os dados do sistema no Firebase
           if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
           !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
           !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
@@ -179,5 +199,6 @@ void loop(){
           
           
         } 
+         
  }
 }

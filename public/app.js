@@ -12,16 +12,9 @@ var dataKdPath ='read/KD';
 var dataTiPath ='read/TI';
 var dataTdPath ='read/TD';
 var dataPtPath ='read/PT';
-/*var dataPvPathSend ='send/PV';
-var dataSpPathSend ='send/SP';
-var dataOvPathSend ='send/OV';
-var dataKpPathSend ='send/KP';
-var dataKiPathSend ='send/KI';
-var dataKdPathSend ='send/KD';
-var dataTiPathSend ='send/TI';
-var dataTdPathSend ='send/TD';
-var dataPtPathSend ='send/PT';*/
 var dataPathSend = 'send/';
+var dataSystemPath = 'read/Data_sistema';
+var dataPathRead = 'read/';
 
 
 
@@ -37,6 +30,7 @@ const databaseTI = database.ref(dataTiPath);
 const databaseTD = database.ref(dataTdPath);
 const databasePT = database.ref(dataPtPath);
 const databasePV = database.ref(dataPvPath);
+const databaseSystem = database.ref(dataSystemPath);
 /*const databaseSPsend = database.ref(dataSpPathSend);
 const databaseOVsend = database.ref(dataOvPathSend);
 const databaseKPsend = database.ref(dataKpPathSend);
@@ -47,14 +41,31 @@ const databaseTDsend = database.ref(dataTdPathSend);
 const databasePTsend = database.ref(dataPtPathSend);
 const databasePVsend = database.ref(dataPvPathSend);*/
 const databaseSend = database.ref(dataPathSend);
+const databaseRead = database.ref(dataPathRead);
 
 
 // Variables to save database current values
 var floatReading;
 var intReading;
-var PV,OV,KP,KI,KD,TI,TD,PT,SP,New_Value;
+var PV,OV,KP,KI,KD,TI,TD,PT,SP,New_Value, SystemAtualData,SystemParameter,SystemData,SystemAtualDataArray;
 
 // Attach an asynchronous callback to read the data
+databaseSystem.on('value', (snapshot) => {
+SystemAtualData = snapshot.val();
+//var  tamanho = String.length(SystemData);
+SystemAtualDataArray = SystemAtualData.split(",");
+
+      //for (let index = 0; index < (SystemAtualDataArray.length-1); index+2) {
+       // SystemParameter = SystemAtualDataArray[index];
+       // SystemData = SystemAtualDataArray[index+1];
+                   databaseRead.update({
+                    SystemParameter:SystemAtualDataArray,
+                      //New_Value : SystemData
+                    });
+        
+     // }
+});
+
 databaseInt.on('value', (snapshot) => {
   intReading = snapshot.val();
   console.log(intReading);

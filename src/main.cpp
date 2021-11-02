@@ -31,7 +31,7 @@
 #define WIFI_PASSWORD "01483211"
 #define D6 12
 #define D5 14
-SoftwareSerial SSSerial(D6, D5); // RX, TX
+SoftwareSerial SSSerial(D6, D5); // RX, TX foi alterado buffer da biblioteca para 128 bytes 2021 11 02 ademar
 
 // Insert Firebase project API Key
 #define API_KEY "AIzaSyBfe8voKhkZX2sEratzomMX1JnfZDmqySA" /*"AIzaSyAmGo0erkvDRUflLCcQvyIgLvPnGlFO2gA"*/
@@ -52,7 +52,7 @@ bool signupOK = false;
 int intValue;
 float floatValue;
 String FBNew_Parameter = "lido";
-String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data;
+String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema;
 
 
 void setup(){
@@ -96,53 +96,15 @@ void setup(){
 void loop(){
   if (SSSerial.available() > 0)
    {
-     Serial.write(SSSerial.read());
      
+     Data_sistema = SSSerial.readString();
+     //Serial.write(intValue);
+     //delay(10);
    }
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 15000 || sendDataPrevMillis == 0)){
+   
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
-    /* Write an Int number on the database path test/int
-    if (Firebase.RTDB.setInt(&fbdo, "test/int", count)){
-      Serial.println("PASSED");
-      Serial.println("PATH: " + fbdo.dataPath());
-      Serial.println("TYPE: " + fbdo.dataType());
-    }
-    else {
-      Serial.println("FAILED");
-      Serial.println("REASON: " + fbdo.errorReason());
-    }
-    count++;
-    ///
-    /////
-    Write an Float number on the database path test/float
-    if (Firebase.RTDB.setFloat(&fbdo, "test/float", 0.01 + random(0,100))){
-      Serial.println("PASSED");
-      Serial.println("PATH: " + fbdo.dataPath());
-      Serial.println("TYPE: " + fbdo.dataType());
-    }
-    else {
-      Serial.println("FAILED");
-      Serial.println("REASON: " + fbdo.errorReason());
-    }
-    if (Firebase.RTDB.getInt(&fbdo, "/test/int")) {
-      if (fbdo.dataType() == "int") {
-        intValue = fbdo.intData();
-        Serial.println(intValue);
-      }
-    }
-    else {
-      Serial.println(fbdo.errorReason());
-    }
     
-    if (Firebase.RTDB.getFloat(&fbdo, "/test/float")) {
-      if (fbdo.dataType() == "float") {
-        floatValue = fbdo.floatData();
-        Serial.println(floatValue);
-      }
-    }
-    else {
-      Serial.println(fbdo.errorReason());
-    }*/
   /////////////////////////////////////////////////////////////////////////
   ////////INICIO DE ROTINA VERIFICA SE DADO NOVO VINDO DO FIREBASE/////////
   ////////////////////////////////////////////////////////////////////////
@@ -161,15 +123,12 @@ void loop(){
                 if (FBNew_Parameter =="TI")FBTI=FBNew_Data;
                 if (FBNew_Parameter =="TD")FBTD=FBNew_Data;
                 if (FBNew_Parameter =="PT")FBPT=FBNew_Data;
-/*
+/////////////////////////////////////////////////////////////////////////////////////
                 Serial.print(FBNew_Parameter[0]);
                 Serial.print(FBNew_Data[0]);
                 Serial.print(FBNew_Data[1]);
                 Serial.print(FBNew_Data[2]);
-                Serial.println(FBNew_Parameter[1]);*/
-                //if (FBNew_Value =="KD")FBKD=fbdo.intData();
-                // Serial.println(fbdo.stringData());
-                
+                Serial.println(FBNew_Parameter[1]);
                 }
                 
                 }
@@ -185,20 +144,23 @@ void loop(){
                 Serial.println(fbdo.errorReason());
               }
   //grava os dados do sistema no Firebase
-          if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
+        /*  if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
           !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
           !Firebase.RTDB.setInt(&fbdo, "read/OV", OV) || 
           !Firebase.RTDB.setInt(&fbdo, "read/KP", KP) ||
           !Firebase.RTDB.setInt(&fbdo, "read/KD", KD) ||
           !Firebase.RTDB.setInt(&fbdo, "read/KI", KI) ||
           !Firebase.RTDB.setInt(&fbdo, "read/TI", TI) ||
-          !Firebase.RTDB.setInt(&fbdo, "read/TD", TD) ||
+          !Firebase.RTDB.setInt(&fbdo, "read/TD",TD) ||
           !Firebase.RTDB.setInt(&fbdo, "read/PT", PT)){
             Serial.println("FAILED");
             Serial.println("REASON: " + fbdo.errorReason());
           
           
-        } 
-         
+        } */
+      if (!Firebase.RTDB.setString(&fbdo, "read/Data_sistema",Data_sistema)){
+            Serial.println("FAILED");
+            Serial.println("REASON: " + fbdo.errorReason());   
  }
+  }
 }

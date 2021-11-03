@@ -54,16 +54,14 @@ databaseSystem.on('value', (snapshot) => {
 SystemAtualData = snapshot.val();
 //var  tamanho = String.length(SystemData);
 SystemAtualDataArray = SystemAtualData.split(",");
-
-      //for (let index = 0; index < (SystemAtualDataArray.length-1); index+2) {
-       // SystemParameter = SystemAtualDataArray[index];
-       // SystemData = SystemAtualDataArray[index+1];
-                   databaseRead.update({
-                    SystemParameter:SystemAtualDataArray,
-                      //New_Value : SystemData
-                    });
-        
-     // }
+databaseRead.update({
+  SystemParameter:SystemAtualDataArray,
+    //New_Value : SystemData
+  })
+  document.getElementById("read-SP").innerHTML = SystemAtualDataArray[1];
+  document.getElementById("read-OV").innerHTML = SystemAtualDataArray[5];
+  document.getElementById("read-KP").innerHTML = SystemAtualDataArray[7];
+     
 });
 
 databaseInt.on('value', (snapshot) => {
@@ -74,25 +72,25 @@ databaseInt.on('value', (snapshot) => {
   console.log('The read failed: ' + errorObject.name);
 });
 
-databaseSP.on('value', (snapshot) => {
-  SP = snapshot.val()
-  document.getElementById("read-SP").innerHTML = SP;
-})
+// databaseSP.on('value', (snapshot) => {
+//   SP = snapshot.val()
+//   document.getElementById("read-SP").innerHTML = SP;
+// })
 
-databaseOV.on('value', (snapshot) => {
-  OV = snapshot.val()
-  document.getElementById("read-OV").innerHTML = OV;
-})
+// databaseOV.on('value', (snapshot) => {
+//   OV = snapshot.val()
+//   document.getElementById("read-OV").innerHTML = OV;
+// })
 
 databasePV.on('value', (snapshot) => {
   PV = snapshot.val()
   document.getElementById("read-PV").innerHTML = PV;
 })
 
-databaseKP.on('value', (snapshot) => {
-  KP = snapshot.val()
-   document.getElementById("read-KP").innerHTML = KP;
-})
+// databaseKP.on('value', (snapshot) => {
+//   KP = snapshot.val()
+//    document.getElementById("read-KP").innerHTML = KP;
+// })
 
 databaseKI.on('value', (snapshot) => {
   KI = snapshot.val()

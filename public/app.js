@@ -58,19 +58,30 @@ databaseRead.update({
   SystemParameter:SystemAtualDataArray,
     //New_Value : SystemData
   })
-  document.getElementById("read-SP").innerHTML = SystemAtualDataArray[1];
-  document.getElementById("read-OV").innerHTML = SystemAtualDataArray[5];
-  document.getElementById("read-KP").innerHTML = SystemAtualDataArray[7];
+  Atualiza_dados(); 
      
 });
 
-databaseInt.on('value', (snapshot) => {
-  intReading = snapshot.val();
-  console.log(intReading);
-  document.getElementById("reading-int").innerHTML = intReading;
-}, (errorObject) => {
-  console.log('The read failed: ' + errorObject.name);
-});
+window.document.onload = Atualiza_dados();
+
+function Atualiza_dados(){
+
+  document.getElementById("read-SP").innerHTML = SystemAtualDataArray[1];
+  document.getElementById("read-PV").innerHTML = SystemAtualDataArray[3];
+  document.getElementById("read-OV").innerHTML = SystemAtualDataArray[5];
+  document.getElementById("read-KP").innerHTML = SystemAtualDataArray[7];
+  document.getElementById("read-KI").innerHTML = SystemAtualDataArray[9];
+  document.getElementById("read-KD").innerHTML = SystemAtualDataArray[11];
+  document.getElementById("read-TI").innerHTML = SystemAtualDataArray[13];
+  document.getElementById("read-TD").innerHTML = SystemAtualDataArray[15];
+}
+//databaseInt.on('value', (snapshot) => {
+//  intReading = snapshot.val();
+//  console.log(intReading);
+//  document.getElementById("reading-int").innerHTML = intReading;
+//}, (errorObject) => {
+//  console.log('The read failed: ' + errorObject.name);
+//});
 
 // databaseSP.on('value', (snapshot) => {
 //   SP = snapshot.val()
@@ -81,7 +92,7 @@ databaseInt.on('value', (snapshot) => {
 //   OV = snapshot.val()
 //   document.getElementById("read-OV").innerHTML = OV;
 // })
-
+/*
 databasePV.on('value', (snapshot) => {
   PV = snapshot.val()
   document.getElementById("read-PV").innerHTML = PV;
@@ -116,7 +127,7 @@ databasePT.on('value', (snapshot) => {
    PT = snapshot.val()
    document.getElementById("read-PT").innerHTML = PT;
  })
- //document.getElementById("read-KP").innerHTML = '10';
+ //document.getElementById("read-KP").innerHTML = '10';*/
  var b_envia_KP = document.getElementById("envia-KP")
  var b_envia_SP = document.getElementById("envia-SP")
 //if(New_Value =='lido'){

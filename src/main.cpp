@@ -31,7 +31,7 @@
 #define WIFI_PASSWORD "01483211"
 #define D6 12
 #define D5 14
-SoftwareSerial SSSerial(D6, D5); // RX, TX foi alterado buffer da biblioteca para 128 bytes 2021 11 02 ademar
+SoftwareSerial SSSerial(D6, D5); // RX, TX foi alterado buffer da biblioteca de 64 para 128 bytes 2021 11 02 ademar
 
 // Insert Firebase project API Key
 #define API_KEY "AIzaSyBfe8voKhkZX2sEratzomMX1JnfZDmqySA" /*"AIzaSyAmGo0erkvDRUflLCcQvyIgLvPnGlFO2gA"*/
@@ -52,12 +52,12 @@ bool signupOK = false;
 int intValue;
 float floatValue;
 String FBNew_Parameter = "lido";
-String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema;
+String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema = "ligando";
 
 
 void setup(){
   Serial.begin(115200);
-  SSSerial.begin(2400);
+  SSSerial.begin(9600);
   pinMode(D6,INPUT); //d7 is RX, receiver, so define it as input
   pinMode(D5,OUTPUT); //d8 is TX, transmitter, so define it as output 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -102,7 +102,7 @@ void loop(){
      //delay(10);
    }
    
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)){
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 500 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
     
   /////////////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ void loop(){
           if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
               if (fbdo.dataType() == "string") {
                 FBNew_Parameter = fbdo.stringData();
-                Serial.println(".");
+                //Serial.println(".");
                 if (FBNew_Parameter !="lido")
                 {
                   Firebase.RTDB.getString(&fbdo, "/send/"+FBNew_Parameter);

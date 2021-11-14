@@ -52,7 +52,7 @@ bool signupOK = false;
 int intValue;
 float floatValue;
 String FBNew_Parameter = "lido";
-String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema = "ligando";
+String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema = "0";
 
 
 void setup(){
@@ -94,44 +94,48 @@ void setup(){
 }
 
 void loop(){
+
   if (SSSerial.available() > 0)
    {
-     
      Data_sistema = SSSerial.readString();
+          if (SSSerial.available() == 0 && Firebase.ready() && signupOK && !Firebase.RTDB.setString(&fbdo, "read/Data_sistema",Data_sistema)){
+            Serial.println("FAILED_SET");
+            Serial.println("REASON: " + fbdo.errorReason()); 
      //Serial.write(intValue);
      //delay(10);
+           }
    }
-   
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 500 || sendDataPrevMillis == 0)){
+
+
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 1000 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
     
   /////////////////////////////////////////////////////////////////////////
   ////////INICIO DE ROTINA VERIFICA SE DADO NOVO VINDO DO FIREBASE/////////
   ////////////////////////////////////////////////////////////////////////
           if (Firebase.RTDB.getString(&fbdo, "send/New_Value")) {
-              if (fbdo.dataType() == "string") {
-                FBNew_Parameter = fbdo.stringData();
+              FBNew_Parameter = fbdo.stringData();
                 //Serial.println(".");
                 if (FBNew_Parameter !="lido")
                 {
                   Firebase.RTDB.getString(&fbdo, "/send/"+FBNew_Parameter);
                   FBNew_Data=fbdo.stringData();             
-                if (FBNew_Parameter =="KP")FBKP=FBNew_Data;
-                if (FBNew_Parameter =="SP")FBSP=FBNew_Data;
-                if (FBNew_Parameter =="KD")FBKD=FBNew_Data;
-                if (FBNew_Parameter =="KI")FBKI=FBNew_Data;
-                if (FBNew_Parameter =="TI")FBTI=FBNew_Data;
-                if (FBNew_Parameter =="TD")FBTD=FBNew_Data;
-                if (FBNew_Parameter =="PT")FBPT=FBNew_Data;
+               // if (FBNew_Parameter =="KP")FBKP=FBNew_Data;
+               // if (FBNew_Parameter =="SP")FBSP=FBNew_Data;
+               // if (FBNew_Parameter =="KD")FBKD=FBNew_Data;
+               // if (FBNew_Parameter =="KI")FBKI=FBNew_Data;
+               // if (FBNew_Parameter =="TI")FBTI=FBNew_Data;
+               // if (FBNew_Parameter =="TD")FBTD=FBNew_Data;
+               // if (FBNew_Parameter =="PT")FBPT=FBNew_Data;
 /////////////////////////////////////////////////////////////////////////////////////
                 Serial.print(FBNew_Parameter[0]);
                 Serial.print(FBNew_Data[0]);
                 Serial.print(FBNew_Data[1]);
                 Serial.print(FBNew_Data[2]);
                 Serial.println(FBNew_Parameter[1]);
-                }
                 
-                }
+                
+                
                 Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
                 SSSerial.write(FBNew_Parameter[0]);
                 SSSerial.write(FBNew_Data[0]);
@@ -139,10 +143,13 @@ void loop(){
                 SSSerial.write(FBNew_Data[2]);
                 SSSerial.write(FBNew_Parameter[1]);
               }
-              
-              else {
-                Serial.println(fbdo.errorReason());
-              }
+  else {SSSerial.write("S000R");
+        Serial.print(".");
+      }
+          }      
+  else {
+    Serial.println(fbdo.errorReason());
+  }
   //grava os dados do sistema no Firebase
         /*  if (!Firebase.RTDB.setInt(&fbdo, "read/SP", SP) || //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
           !Firebase.RTDB.setInt(&fbdo, "read/PV", PV) ||
@@ -158,9 +165,8 @@ void loop(){
           
           
         } */
-      if (!Firebase.RTDB.setString(&fbdo, "read/Data_sistema",Data_sistema)){
-            Serial.println("FAILED");
-            Serial.println("REASON: " + fbdo.errorReason());   
- }
-  }
+       
+            
+  }     
+  
 }

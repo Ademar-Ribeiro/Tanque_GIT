@@ -98,6 +98,7 @@ void loop(){
   if (SSSerial.available() > 0)
    {
      Data_sistema = SSSerial.readString();
+     Serial.write("+");
           if (SSSerial.available() == 0 && Firebase.ready() && signupOK && !Firebase.RTDB.setString(&fbdo, "read/Data_sistema",Data_sistema)){
             Serial.println("FAILED_SET");
             Serial.println("REASON: " + fbdo.errorReason()); 

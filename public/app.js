@@ -49,7 +49,6 @@ var floatReading;
 var intReading;
 var PV,OV,KP,KI,KD,TI,TD,PT,SP,New_Value, SystemAtualData,SystemParameter,SystemData;
 var SystemAtualDataArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-
 // Attach an asynchronous callback to read the data
 databaseSystem.on('value', (snapshot) => {
 SystemAtualData = snapshot.val();
@@ -61,15 +60,15 @@ databaseRead.update({
   })
   Atualiza_dados(); 
      
-});
+})
 
 
 window.onload = function(){
-  Atualiza_dados();
-	var canvas = document.getElementById("canvasGrafico");
+  
+  var canvas = document.getElementById("canvasGrafico");
+
 	if (canvas) {
-		// o restante do código ficará aqui
-    //altura da canvas
+		//altura da canvas
 var altura = 200;
 //largura da canvas
 var largura = 1000;
@@ -89,6 +88,7 @@ ctx.fillStyle = "lime";
 ctx.fillRect(0, 0, largura, altura);
 ctx.font = "30px Courier";
 
+}
 function desenharGrafico() {
 	//define o avanço horizontal
 	x+=5;
@@ -98,15 +98,17 @@ function desenharGrafico() {
 	ctx.lineTo(x, altura-valor);
 	ctx.stroke();
 	//desenha um retangulo onde está sendo escrito o valor do gráfico
-	ctx.fillStyle = "pink";
-	ctx.fillRect(0, 0, largura, 30);
-	//desenha o texto indicando o valor do gráfico, na posição x atual
 	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, largura, 35);
+	//desenha o texto indicando o valor do gráfico, na posição x atual
+	ctx.fillStyle = "white";
 	ctx.fillText(valor, x, 30);
 
-  if(x >= largura) {
-    x = 0;
- ctx.clearRect(0, 0, largura, altura);
+  
+
+if(x >= largura) {
+  x = 0;
+ctx.clearRect(0, 0, largura, altura);
 canvas = document.getElementById("canvasGrafico");
 canvas.setAttribute("width", largura);
 canvas.setAttribute("height", altura);
@@ -114,14 +116,19 @@ ctx = canvas.getContext("2d");
 ctx.fillStyle = "lime";
 ctx.fillRect(0, 0, largura, altura);
 ctx.font = "30px Courier";
+}	
 
-    
-   
-  };
 }
-setInterval(desenharGrafico, 100);
-	}
+setInterval(desenharGrafico, 300);
 };
+
+
+
+/*
+ 
+  
+*/
+
 
 function Atualiza_dados(){
 

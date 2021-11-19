@@ -25,10 +25,10 @@
 
 
 // Insert your network credentials
-//#define WIFI_SSID "Galaxy A51D070"
-//#define WIFI_PASSWORD "mwal1973"
-#define WIFI_SSID "Desktop_F3426606"
-#define WIFI_PASSWORD "01483211"
+#define WIFI_SSID "Galaxy A51D070"
+#define WIFI_PASSWORD "mwal1973"
+//#define WIFI_SSID "Desktop_F3426606"
+//#define WIFI_PASSWORD "01483211"
 #define D6 12
 #define D5 14
 SoftwareSerial SSSerial(D6, D5); // RX, TX foi alterado buffer da biblioteca de 64 para 128 bytes 2021 11 02 ademar
@@ -57,7 +57,7 @@ String FBKP, FBSP ,FBOV,FBKD,FBKI,FBTI,FBPT,FBTD,FBPV,FBNew_Data,Data_sistema = 
 
 void setup(){
   Serial.begin(115200);
-  SSSerial.begin(9600);
+  SSSerial.begin(2400);
   pinMode(D6,INPUT); //d7 is RX, receiver, so define it as input
   pinMode(D5,OUTPUT); //d8 is TX, transmitter, so define it as output 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);

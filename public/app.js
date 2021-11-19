@@ -58,7 +58,7 @@ databaseRead.update({
   SystemParameter:SystemAtualDataArray,
     //New_Value : SystemData
   })
-  Atualiza_dados(); 
+  
      
 })
 
@@ -66,6 +66,7 @@ databaseRead.update({
 window.onload = function(){
   
   var canvas = document.getElementById("canvasGrafico");
+  var canvastitulo = document.getElementById("tituloGrafico");
 
 	if (canvas) {
 		//altura da canvas
@@ -80,54 +81,93 @@ var valor;
 //formatando a canvas
 canvas.setAttribute("width", largura);
 canvas.setAttribute("height", altura);
+canvastitulo.setAttribute("width", largura);
+canvastitulo.setAttribute("height", 40);
 
 //obtendo o contexto 2d
 var ctx = canvas.getContext("2d");
-
-ctx.fillStyle = "lime";
+var ctxtitulo = canvastitulo.getContext("2d");
+var sp_anterior = 0 , pv_anterior = 0, ov_anterior = 0, x_anterior =0;
+ctx.fillStyle = "black";
 ctx.fillRect(0, 0, largura, altura);
-ctx.font = "30px Courier";
-
-}
+ctxtitulo.font = "30px Courier";
+//desenha um retangulo onde está sendo escrito o valor do gráfico
+	ctxtitulo.fillStyle = "black";
+	ctxtitulo.fillRect(0, 0, largura, 40);
+	//desenha o texto indicando o valor do gráfico, na posição x atual
+  ctxtitulo.textBaseline = "middle";
+  ctxtitulo.fillStyle = "yellow";
+	ctxtitulo.fillText("SP", 300, 15);
+  ctxtitulo.fillStyle = "white";
+	ctxtitulo.fillText("PV", 450, 15);
+  ctxtitulo.fillStyle = "red";
+	ctxtitulo.fillText("OV", 600, 15);
 function desenharGrafico() {
 	//define o avanço horizontal
-	x+=5;
+	x+=3;
 	//gera um valor aleatório entre 0 e 100
-	valor = Number (SystemAtualDataArray[2]);
+	SP = Number (SystemAtualDataArray[2]);
+  PV = Number (SystemAtualDataArray[4]);
+  OV = Number (SystemAtualDataArray[6]);
 	//desenha uma linha até a posição gerada
-	ctx.lineTo(x, altura-valor);
-	ctx.stroke();
-	//desenha um retangulo onde está sendo escrito o valor do gráfico
-	ctx.fillStyle = "black";
-	ctx.fillRect(0, 0, largura, 35);
-	//desenha o texto indicando o valor do gráfico, na posição x atual
-	ctx.fillStyle = "white";
-	ctx.fillText(valor, x, 30);
+  ctx.beginPath();
+  ctx.strokeStyle = "yellow";
+  ctx.lineWidth = 3;
+  ctx.moveTo(x_anterior,sp_anterior);
+  ctx.lineTo(x, altura-SP-10);
+  ctx.stroke();
 
+  ctx.beginPath();
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 3;
+  ctx.moveTo(x_anterior,pv_anterior);
+  ctx.lineTo(x, altura-PV-10);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 3;
+  ctx.moveTo(x_anterior,ov_anterior);
+  ctx.lineTo(x, altura-OV-10);
+  ctx.stroke();
+  //ctx.strokeStyle = "white";
+  x_anterior = x;
+  sp_anterior = (altura - SP-10);
+  pv_anterior = (altura - PV-10);
+  ov_anterior = (altura - OV-10);
   
+  
+  
+  
+
+	
 
 if(x >= largura) {
   x = 0;
 ctx.clearRect(0, 0, largura, altura);
-canvas = document.getElementById("canvasGrafico");
-canvas.setAttribute("width", largura);
-canvas.setAttribute("height", altura);
-ctx = canvas.getContext("2d");
-ctx.fillStyle = "lime";
+sp_anterior = 0 , pv_anterior = 0, ov_anterior = 0, x_anterior =0;
+ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, largura, 30);
+ctx.fillStyle = "yellow";
+	ctx.fillText("SP", 100, 20);
+  ctx.fillStyle = "white";
+	ctx.fillText("PV", 200, 20);
+  ctx.fillStyle = "red";
+	ctx.fillText("OV", 300, 20);
+ctx.fillStyle = "black";
 ctx.fillRect(0, 0, largura, altura);
-ctx.font = "30px Courier";
+//ctx.font = "30px Courier";
 }	
 
+};
+  
+setInterval(desenharGrafico, 50);
+
 }
-setInterval(desenharGrafico, 300);
 };
 
 
-
-/*
  
-  
-*/
 
 
 function Atualiza_dados(){
@@ -141,6 +181,7 @@ function Atualiza_dados(){
   document.getElementById("read-TI").innerHTML = SystemAtualDataArray[14];
   document.getElementById("read-TD").innerHTML = SystemAtualDataArray[16];
 }
+setInterval(Atualiza_dados,500);
 //databaseInt.on('value', (snapshot) => {
 //  intReading = snapshot.val();
 //  console.log(intReading);

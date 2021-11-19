@@ -32,23 +32,40 @@ const firebaseConfig = {
 <script src="app.js" defer></script>
 
 <style>
-body{
+    body{
     font: normal 18pt Arial;
     }
+
     body h1{
+    text-align: center;
     color: rgb(255, 102, 0);
     }
+
     input{
         font: normal 18pt Times;
     }
 
+    main{
+        margin-bottom: 20px 0px;
+    }
+
+
+
+
+
+
+
 </style>
 
 </head>
+
 <body>
-    <div></div>
     <h1>ESP32 Firebase<br> Web App <br>Unisal</h1>    <!--SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD; -->
+    
+    <div></div>
+    <canvas id="tituloGrafico"></canvas>
     <canvas id="canvasGrafico"></canvas>
+    
     <p>Nivel Atual: <span id="read-PV"></span></p>
     <p>Set Point Atual: <span id="read-SP"></span></p>
     <p>Ganho KP Atual: <span id="read-KP"></span></p>

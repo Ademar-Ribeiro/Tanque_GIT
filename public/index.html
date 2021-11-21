@@ -38,48 +38,150 @@ const firebaseConfig = {
 
     body h1{
     text-align: center;
-    color: rgb(255, 102, 0);
+    color: blue;
     }
-
+    
     input{
-        font: normal 18pt Times;
+    font: normal 18pt Times;
     }
 
-    main{
-        margin-bottom: 20px 0px;
+    main {
+    margin-bottom: 20px 0px;
     }
 
+    .dados-section {
+    display: flex;
+    flex-direction: column;
+    }
 
+    .dados-atuais {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    display: flex;
+    }
+  
+    .quadro-box {
+    background-color: rgba(206, 203, 203, 0.658);
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-color: black;
+    box-shadow: 1px 1px 3px rgba(8, 8, 8, 0.3);
+    width: 500px;
+    height: 730px;
+    }
 
+    h4 {
+    text-align: center;
+    text-decoration: underline;
+    }
 
+    h5 {
+    text-align: right;
+    padding-right: 2.5em;
+    }
+  
+    a {
+    margin-top: 2px;
+    color: black;
+    text-decoration: none;
+    }
+  
+    p {
+    padding-top: px;
+    text-indent: 2em;
+    line-height: 0.5;
+    }
 
+    label {
+    display: inline-block;
+    text-align: left;
+    }
 
+    label, input {
+  	width: 150px;
+    }
 
-</style>
+    input {
+  	width:110px;
+    }
 
+    li {
+    text-indent: 1em;
+    list-style: none;
+    padding: 14px;
+    }
+
+    canvas {
+      align-items: center;
+    }
+
+    @media screen and (max-width: 960px) {
+    .dados-atuais {
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .row {
+    flex-direction: column;
+    align-items: center;
+    } 
+    }
+</style> 
 </head>
 
 <body>
-    <h1>ESP32 Firebase<br> Web App <br>Unisal</h1>    <!--SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD; -->
-    
-    <div></div>
-    <canvas id="tituloGrafico"></canvas>
-    <canvas id="canvasGrafico"></canvas>
-    
-    <p>Nivel Atual: <span id="read-PV"></span></p>
-    <p>Set Point Atual: <span id="read-SP"></span></p>
-    <p>Ganho KP Atual: <span id="read-KP"></span></p>
-    <p>Ganho KD Atual: <span id="read-KD"></span></p>
-    <p>Ganho KI Atual: <span id="read-KI"></span></p>
-    <p>Tempo TI Atual: <span id="read-TI"></span></p>
-    <p>Ganho TD Atual: <span id="read-TD"></span></p>
-    <p>OV Atual: <span id="read-OV"></span></p>
-    <!-- <p> PT Atual: <span id="read-PT"></span></p> -->
-    <input type="number" name="level" id="level" min="0" max="100"> SP
-    <input type="button" value="Send" id="envia-SP" > <br>
-    
-    <input type="number" name="kp" id="kp" min="0" max="999"> KP
-    <input type="button" value="Send" id="envia-KP"> <br>
-    <input type="number" name="ki" id="ki"> Ki
+  <h1>ESP32 Firebase<br> Web App Unisal</h1>
+  
+  <main>
+    <section id="dados" class="dados-section">  
+      
+      <div>
+        <canvas id="tituloGrafico"></canvas>
+        <canvas id="canvasGrafico"></canvas>
+      </div>
+     
+     <div class= "dados-atuais">
+      <a href="" aria-labelledby="quadro1">
+      <figure class="quadro-box">
+       <h4>Valores atuais</h4>
+       <p> &nbsp;&nbsp; Valor do Nível: <span id="read-PV"></span></p>
+       <p> &nbsp;&nbsp; Valor do Set Point : <span id="read-SP"></span></p>
+       <p> &nbsp;&nbsp; Valor do ganho KP : <span id="read-KP"></span></p>
+       <p> &nbsp;&nbsp; Valor do ganho KD : <span id="read-KD"></span></p>
+       <p> &nbsp;&nbsp; Valor do ganho KI : <span id="read-KI"></span></p>
+       <p> &nbsp;&nbsp; Valor de Tempo TI: <span id="read-TI"></span></p>
+       <p> &nbsp;&nbsp; Valor de Tempo TD : <span id="read-TD"></span></p>
+       <p> &nbsp;&nbsp; OV : <span id="read-OV"></span></p>
+      </figure>
+      </a>
+
+       <a href="" aria-labelledby="quadro2"></a>
+        <figure class="quadro-box">
+        <h4>Novos Valores</h4>
+        <li><label>Set Point:</label><input type="number" name="setpoint" id="setpoint" min="0" max="999">  
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-SP"></li> 
+        <li><label>KP:</label><input type="number" name="kp" id="kp" min="0" max="999"> 
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-KP"></li> 
+        <li><label>KD:</label><input type="number" name="kd" id="kd" min="0" max="999">  
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-KD"></li> 
+        <li><label>KI:</label><input type="number" name="ki" id="ki" min="0" max="999">  
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-KI"></li> 
+        <li><label>TI:</label><input type="number" name="ti" id="ti" min="0" max="999"> 
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-TI"></li> 
+        <li><label>TD:</label><input type="number" name="td" id="td" min="0" max="999">  
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-TD"></li> 
+        <li><label>PT:</label><input type="number" name="pt" id="pt" min="0" max="999"> 
+            &nbsp; &nbsp; <input type="button" value="Send" id="envia-PT"></li>
+        </figure>
+    </a>
+    </div> 
+
+</section>
+</main>
 </body>
 </html>
+

@@ -1,17 +1,17 @@
 // Complete Project Details at: https://RandomNerdTutorials.com/
 
 // Database Paths //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
-var dataFloatPath = 'test/float';
-var dataIntPath = 'test/int';
-var dataPvPath ='read/PV';
-var dataSpPath ='read/SP';
-var dataOvPath ='read/OV';
-var dataKpPath ='read/KP';
-var dataKiPath ='read/KI';
-var dataKdPath ='read/KD';
-var dataTiPath ='read/TI';
-var dataTdPath ='read/TD';
-var dataPtPath ='read/PT';
+// var dataFloatPath = 'test/float';
+// var dataIntPath = 'test/int';
+// var dataPvPath ='read/PV';
+// var dataSpPath ='read/SP';
+// var dataOvPath ='read/OV';
+// var dataKpPath ='read/KP';
+// var dataKiPath ='read/KI';
+// var dataKdPath ='read/KD';
+// var dataTiPath ='read/TI';
+// var dataTdPath ='read/TD';
+// var dataPtPath ='read/PT';
 var dataPathSend = 'send/';
 var dataSystemPath = 'read/Data_sistema';
 var dataPathRead = 'read/';
@@ -19,27 +19,19 @@ var dataPathRead = 'read/';
 
 
 // Get a database reference 
-const databaseFloat = database.ref(dataFloatPath);
-const databaseInt = database.ref(dataIntPath);
-const databaseSP = database.ref(dataSpPath);
-const databaseOV = database.ref(dataOvPath);
-const databaseKP = database.ref(dataKpPath);
-const databaseKI = database.ref(dataKiPath);
-const databaseKD = database.ref(dataKdPath);
-const databaseTI = database.ref(dataTiPath);
-const databaseTD = database.ref(dataTdPath);
-const databasePT = database.ref(dataPtPath);
-const databasePV = database.ref(dataPvPath);
+// const databaseFloat = database.ref(dataFloatPath);
+// const databaseInt = database.ref(dataIntPath);
+// const databaseSP = database.ref(dataSpPath);
+// const databaseOV = database.ref(dataOvPath);
+// const databaseKP = database.ref(dataKpPath);
+// const databaseKI = database.ref(dataKiPath);
+// const databaseKD = database.ref(dataKdPath);
+// const databaseTI = database.ref(dataTiPath);
+// const databaseTD = database.ref(dataTdPath);
+// const databasePT = database.ref(dataPtPath);
+// const databasePV = database.ref(dataPvPath);
 const databaseSystem = database.ref(dataSystemPath);
-/*const databaseSPsend = database.ref(dataSpPathSend);
-const databaseOVsend = database.ref(dataOvPathSend);
-const databaseKPsend = database.ref(dataKpPathSend);
-const databaseKIsend = database.ref(dataKiPathSend);
-const databaseKDsend = database.ref(dataKdPathSend);
-const databaseTIsend = database.ref(dataTiPathSend);
-const databaseTDsend = database.ref(dataTdPathSend);
-const databasePTsend = database.ref(dataPtPathSend);
-const databasePVsend = database.ref(dataPvPathSend);*/
+
 const databaseSend = database.ref(dataPathSend);
 const databaseRead = database.ref(dataPathRead);
 
@@ -67,6 +59,7 @@ window.onload = function(){
   
   var canvas = document.getElementById("canvasGrafico");
   var canvastitulo = document.getElementById("tituloGrafico");
+  Atualiza_dados();
 
 	if (canvas) {
 		//altura da canvas
@@ -95,13 +88,13 @@ ctxtitulo.font = "30px Courier";
 	ctxtitulo.fillStyle = "black";
 	ctxtitulo.fillRect(0, 0, largura, 40);
 	//desenha o texto indicando o valor do gráfico, na posição x atual
-  ctxtitulo.textBaseline = "middle";
-  ctxtitulo.fillStyle = "yellow";
-	ctxtitulo.fillText("SP", 300, 15);
-  ctxtitulo.fillStyle = "white";
-	ctxtitulo.fillText("PV", 450, 15);
-  ctxtitulo.fillStyle = "red";
-	ctxtitulo.fillText("OV", 600, 15);
+  // ctxtitulo.textBaseline = "middle";
+  // ctxtitulo.fillStyle = "yellow";
+	// ctxtitulo.fillText("SP", 300, 15);
+  // ctxtitulo.fillStyle = "white";
+	// ctxtitulo.fillText("PV", 450, 15);
+  // ctxtitulo.fillStyle = "red";
+	// ctxtitulo.fillText("OV", 600, 15);
 function desenharGrafico() {
 	//define o avanço horizontal
 	x+=3;
@@ -135,8 +128,15 @@ function desenharGrafico() {
   sp_anterior = (altura - SP-10);
   pv_anterior = (altura - PV-10);
   ov_anterior = (altura - OV-10);
-  
-  
+  ctxtitulo.fillStyle = "black";
+	ctxtitulo.fillRect(0, 0, largura, 40);
+  ctxtitulo.textBaseline = "middle";
+  ctxtitulo.fillStyle = "yellow";
+	ctxtitulo.fillText('SP '+ SP, 300, 15);
+  ctxtitulo.fillStyle = "white";
+	ctxtitulo.fillText('PV '+ PV, 400, 15);
+  ctxtitulo.fillStyle = "red";
+	ctxtitulo.fillText('OV '+OV, 600, 15);
   
   
 
@@ -161,7 +161,7 @@ ctx.fillRect(0, 0, largura, altura);
 
 };
   
-setInterval(desenharGrafico, 50);
+setInterval(desenharGrafico, 100);
 
 }
 };
@@ -235,25 +235,77 @@ databasePT.on('value', (snapshot) => {
    document.getElementById("read-PT").innerHTML = PT;
  })
  //document.getElementById("read-KP").innerHTML = '10';*/
- var b_envia_KP = document.getElementById("envia-KP")
  var b_envia_SP = document.getElementById("envia-SP")
-//if(New_Value =='lido'){
+ var b_envia_KP = document.getElementById("envia-KP")
+ var b_envia_KD = document.getElementById("envia-KD")
+ var b_envia_KI = document.getElementById("envia-KI")
+ var b_envia_TI = document.getElementById("envia-TI")
+ var b_envia_TD = document.getElementById("envia-TD")
+ var b_envia_OV = document.getElementById("envia-OV")
+ var b_envia_PT = document.getElementById("envia-PT")
+
+ //if(New_Value =='lido'){
+  b_envia_SP.addEventListener("click", function() {
+    var dado_lido =('000' + String(window.document.querySelector('input#setpoint').value)).slice(-3)
+    databaseSend.update({
+      //SP:dado_lido,
+      New_Value :'S'+dado_lido+'P'
+    }); 
+  })
+
  b_envia_KP.addEventListener("click", function() {
   //document.getElementById("read-KP").innerHTML = '17';
     var dado_lido =('000' + String(window.document.querySelector('input#kp').value)).slice(-3)
       databaseSend.update({
-      KP:dado_lido,
-      New_Value : 'KP'
-    });
-    
+     // KP:dado_lido,
+      New_Value : 'K'+dado_lido+'P'
+    });  
  })
 
-
- b_envia_SP.addEventListener("click", function() {
-  var dado_lido =('000' + String(window.document.querySelector('input#level').value)).slice(-3)
+ b_envia_KD.addEventListener("click", function() {
+  var dado_lido =('000' + String(window.document.querySelector('input#kd').value)).slice(-3)
   databaseSend.update({
-    SP:dado_lido,
-    New_Value :'SP'
+    //SP:dado_lido,
+    New_Value :'K'+dado_lido+'D'
   });
-  
-})//}
+})
+
+b_envia_KI.addEventListener("click", function() {
+  var dado_lido =('000' + String(window.document.querySelector('input#ki').value)).slice(-3)
+  databaseSend.update({
+    //SP:dado_lido,
+    New_Value :'K'+dado_lido+'I'
+  });
+})
+
+b_envia_TI.addEventListener("click", function() {
+  var dado_lido =('000' + String(window.document.querySelector('input#ti').value)).slice(-3)
+  databaseSend.update({
+    //SP:dado_lido,
+    New_Value :'T'+dado_lido+'I'
+  });
+})
+
+b_envia_TD.addEventListener("click", function() {
+  var dado_lido =('000' + String(window.document.querySelector('input#td').value)).slice(-3)
+  databaseSend.update({
+    //SP:dado_lido,
+    New_Value :'T'+dado_lido+'D'
+  });
+})
+
+// b_envia_OV.addEventListener("click", function() {
+//   var dado_lido =('000' + String(window.document.querySelector('input#v').value)).slice(-3)
+//   databaseSend.update({
+//     //SP:dado_lido,
+//     New_Value :'O'+dado_lido+'V'
+//   });
+// })
+
+b_envia_PT.addEventListener("click", function() {
+  var dado_lido =('000' + String(window.document.querySelector('input#pt').value)).slice(-3)
+  databaseSend.update({
+    //SP:dado_lido,
+    New_Value :'P'+dado_lido+'T'
+  });
+})

@@ -119,31 +119,12 @@ void loop(){
                 //Serial.println(".");
                 if (FBNew_Parameter !="lido")
                 {
-                  Firebase.RTDB.getString(&fbdo, "/send/"+FBNew_Parameter);
-                  FBNew_Data=fbdo.stringData();             
-               // if (FBNew_Parameter =="KP")FBKP=FBNew_Data;
-               // if (FBNew_Parameter =="SP")FBSP=FBNew_Data;
-               // if (FBNew_Parameter =="KD")FBKD=FBNew_Data;
-               // if (FBNew_Parameter =="KI")FBKI=FBNew_Data;
-               // if (FBNew_Parameter =="TI")FBTI=FBNew_Data;
-               // if (FBNew_Parameter =="TD")FBTD=FBNew_Data;
-               // if (FBNew_Parameter =="PT")FBPT=FBNew_Data;
-/////////////////////////////////////////////////////////////////////////////////////
-                Serial.print(FBNew_Parameter[0]);
-                Serial.print(FBNew_Data[0]);
-                Serial.print(FBNew_Data[1]);
-                Serial.print(FBNew_Data[2]);
-                Serial.println(FBNew_Parameter[1]);
-                
-                
-                
+                  
+                Serial.print(FBNew_Parameter);
                 Firebase.RTDB.setString(&fbdo, "send/New_Value", "lido");
-                SSSerial.write(FBNew_Parameter[0]);
-                SSSerial.write(FBNew_Data[0]);
-                SSSerial.write(FBNew_Data[1]);
-                SSSerial.write(FBNew_Data[2]);
-                SSSerial.write(FBNew_Parameter[1]);
-              }
+                SSSerial.print(FBNew_Parameter);
+                }
+
   else {SSSerial.write("S000R");
         Serial.print(".");
       }

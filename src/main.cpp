@@ -25,10 +25,10 @@
 
 
 // Insert your network credentials
-#define WIFI_SSID "Galaxy A51D070"
-#define WIFI_PASSWORD "mwal1973"
-//#define WIFI_SSID "Desktop_F3426606"
-//#define WIFI_PASSWORD "01483211"
+//#define WIFI_SSID "Galaxy A51D070"
+//#define WIFI_PASSWORD "mwal1973"
+#define WIFI_SSID "Desktop_F3426606"
+#define WIFI_PASSWORD "01483211"
 #define D6 12
 #define D5 14
 SoftwareSerial SSSerial(D6, D5); // RX, TX foi alterado buffer da biblioteca de 64 para 128 bytes 2021 11 02 ademar
@@ -108,7 +108,7 @@ void loop(){
    }
 
 
-  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 1000 || sendDataPrevMillis == 0)){
+  if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 400 || sendDataPrevMillis == 0)){
     sendDataPrevMillis = millis();
     
   /////////////////////////////////////////////////////////////////////////

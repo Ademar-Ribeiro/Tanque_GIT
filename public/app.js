@@ -1,17 +1,6 @@
 // Complete Project Details at: https://RandomNerdTutorials.com/
 
 // Database Paths //SP = 10,OV = 5,KP =1,KD,KI,TI,PT,TD;
-// var dataFloatPath = 'test/float';
-// var dataIntPath = 'test/int';
-// var dataPvPath ='read/PV';
-// var dataSpPath ='read/SP';
-// var dataOvPath ='read/OV';
-// var dataKpPath ='read/KP';
-// var dataKiPath ='read/KI';
-// var dataKdPath ='read/KD';
-// var dataTiPath ='read/TI';
-// var dataTdPath ='read/TD';
-// var dataPtPath ='read/PT';
 var dataPathSend = 'send/';
 var dataSystemPath = 'read/Data_sistema';
 var dataPathRead = 'read/';
@@ -19,17 +8,6 @@ var dataPathRead = 'read/';
 
 
 // Get a database reference 
-// const databaseFloat = database.ref(dataFloatPath);
-// const databaseInt = database.ref(dataIntPath);
-// const databaseSP = database.ref(dataSpPath);
-// const databaseOV = database.ref(dataOvPath);
-// const databaseKP = database.ref(dataKpPath);
-// const databaseKI = database.ref(dataKiPath);
-// const databaseKD = database.ref(dataKdPath);
-// const databaseTI = database.ref(dataTiPath);
-// const databaseTD = database.ref(dataTdPath);
-// const databasePT = database.ref(dataPtPath);
-// const databasePV = database.ref(dataPvPath);
 const databaseSystem = database.ref(dataSystemPath);
 
 const databaseSend = database.ref(dataPathSend);
@@ -39,7 +17,7 @@ const databaseRead = database.ref(dataPathRead);
 // Variables to save database current values
 var floatReading;
 var intReading;
-var PV,OV,KP,KI,KD,TI,TD,PT,SP,New_Value, SystemAtualData,SystemParameter,SystemData;
+var PV,OV,SP,New_Value, SystemAtualData,SystemParameter;
 var SystemAtualDataArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
 // Attach an asynchronous callback to read the data
 databaseSystem.on('value', (snapshot) => {
@@ -132,11 +110,11 @@ function desenharGrafico() {
 	ctxtitulo.fillRect(0, 0, largura, 40);
   ctxtitulo.textBaseline = "middle";
   ctxtitulo.fillStyle = "yellow";
-	ctxtitulo.fillText('SP '+ SP, 300, 15);
+	ctxtitulo.fillText('SP'+ SP, 200, 15);
   ctxtitulo.fillStyle = "white";
-	ctxtitulo.fillText('PV '+ PV, 400, 15);
+	ctxtitulo.fillText('PV'+ PV, 400, 15);
   ctxtitulo.fillStyle = "red";
-	ctxtitulo.fillText('OV '+OV, 600, 15);
+	ctxtitulo.fillText('OV'+OV, 600, 15);
   
   
 
@@ -146,14 +124,14 @@ if(x >= largura) {
   x = 0;
 ctx.clearRect(0, 0, largura, altura);
 sp_anterior = 0 , pv_anterior = 0, ov_anterior = 0, x_anterior =0;
-ctx.fillStyle = "black";
-	ctx.fillRect(0, 0, largura, 30);
-ctx.fillStyle = "yellow";
-	ctx.fillText("SP", 100, 20);
-  ctx.fillStyle = "white";
-	ctx.fillText("PV", 200, 20);
-  ctx.fillStyle = "red";
-	ctx.fillText("OV", 300, 20);
+//ctx.fillStyle = "black";
+//	ctx.fillRect(0, 0, largura, 30);
+//ctx.fillStyle = "yellow";
+//	ctx.fillText("SP", 100, 20);
+//  ctx.fillStyle = "white";
+//	ctx.fillText("PV", 200, 20);
+//  ctx.fillStyle = "red";
+//	ctx.fillText("OV", 300, 20);
 ctx.fillStyle = "black";
 ctx.fillRect(0, 0, largura, altura);
 //ctx.font = "30px Courier";
@@ -181,60 +159,8 @@ function Atualiza_dados(){
   document.getElementById("read-TI").innerHTML = SystemAtualDataArray[14];
   document.getElementById("read-TD").innerHTML = SystemAtualDataArray[16];
 }
-setInterval(Atualiza_dados,500);
-//databaseInt.on('value', (snapshot) => {
-//  intReading = snapshot.val();
-//  console.log(intReading);
-//  document.getElementById("reading-int").innerHTML = intReading;
-//}, (errorObject) => {
-//  console.log('The read failed: ' + errorObject.name);
-//});
+setInterval(Atualiza_dados,200);
 
-// databaseSP.on('value', (snapshot) => {
-//   SP = snapshot.val()
-//   document.getElementById("read-SP").innerHTML = SP;
-// })
-
-// databaseOV.on('value', (snapshot) => {
-//   OV = snapshot.val()
-//   document.getElementById("read-OV").innerHTML = OV;
-// })
-/*
-databasePV.on('value', (snapshot) => {
-  PV = snapshot.val()
-  document.getElementById("read-PV").innerHTML = PV;
-})
-
-// databaseKP.on('value', (snapshot) => {
-//   KP = snapshot.val()
-//    document.getElementById("read-KP").innerHTML = KP;
-// })
-
-databaseKI.on('value', (snapshot) => {
-  KI = snapshot.val()
-  document.getElementById("read-KI").innerHTML = KI;
-})
-
-databaseKD.on('value', (snapshot) => {
-  KD = snapshot.val()
-  document.getElementById("read-KD").innerHTML = KD;
-})
-
-databaseTI.on('value', (snapshot) => {
-  TI = snapshot.val()
-  document.getElementById("read-TI").innerHTML = TI;
-})
-
-databaseTD.on('value', (snapshot) => {
-  TD = snapshot.val()
-  document.getElementById("read-TD").innerHTML = TD;
-})
-
-databasePT.on('value', (snapshot) => {
-   PT = snapshot.val()
-   document.getElementById("read-PT").innerHTML = PT;
- })
- //document.getElementById("read-KP").innerHTML = '10';*/
  var b_envia_SP = document.getElementById("envia-SP")
  var b_envia_KP = document.getElementById("envia-KP")
  var b_envia_KD = document.getElementById("envia-KD")

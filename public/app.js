@@ -75,7 +75,7 @@ ctxtitulo.font = "30px Courier";
 	// ctxtitulo.fillText("OV", 600, 15);
 function desenharGrafico() {
 	//define o avanço horizontal
-	x+=3;
+	x+=1;
 	//gera um valor aleatório entre 0 e 100
 	SP = Number (SystemAtualDataArray[2]);
   PV = Number (SystemAtualDataArray[4]);
@@ -144,10 +144,6 @@ setInterval(desenharGrafico, 100);
 }
 };
 
-
- 
-
-
 function Atualiza_dados(){
 
   document.getElementById("read-SP").innerHTML = SystemAtualDataArray[2];
@@ -161,14 +157,16 @@ function Atualiza_dados(){
 }
 setInterval(Atualiza_dados,200);
 
- var b_envia_SP = document.getElementById("envia-SP")
- var b_envia_KP = document.getElementById("envia-KP")
- var b_envia_KD = document.getElementById("envia-KD")
- var b_envia_KI = document.getElementById("envia-KI")
- var b_envia_TI = document.getElementById("envia-TI")
- var b_envia_TD = document.getElementById("envia-TD")
- var b_envia_OV = document.getElementById("envia-OV")
- var b_envia_PT = document.getElementById("envia-PT")
+  var b_envia_SP = document.getElementById("envia-SP")
+  var b_envia_KP = document.getElementById("envia-KP")
+  var b_envia_KD = document.getElementById("envia-KD")
+  var b_envia_KI = document.getElementById("envia-KI")
+  var b_envia_TI = document.getElementById("envia-TI")
+  var b_envia_TD = document.getElementById("envia-TD")
+  var b_envia_OV = document.getElementById("envia-OV")
+  var b_envia_PT = document.getElementById("envia-PT")
+  var b_liga = document.getElementById("liga")
+  var b_desliga = document.getElementById("desliga")
 
  //if(New_Value =='lido'){
   b_envia_SP.addEventListener("click", function() {
@@ -233,5 +231,17 @@ b_envia_PT.addEventListener("click", function() {
   databaseSend.update({
     //SP:dado_lido,
     New_Value :'P'+dado_lido+'T'
+  });
+})
+
+b_liga.addEventListener("click", function() {
+  databaseSend.update({
+    New_Value: 'L000C'
+  });
+})
+
+b_desliga.addEventListener("click", function() {
+  databaseSend.update({
+    New_Value: 'D000C'
   });
 })

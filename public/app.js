@@ -43,7 +43,7 @@ window.onload = function(){
 		//altura da canvas
 var altura = 200;
 //largura da canvas
-var largura = 1000;
+var largura = 1267;
 //posição horizontal inicial do gráfico
 var x = 0;
 //valor dos pontos do gráfico, que será alterado aleatoriamente
@@ -139,7 +139,7 @@ ctx.fillRect(0, 0, largura, altura);
 
 };
   
-setInterval(desenharGrafico, 100);
+setInterval(desenharGrafico, 200);
 
 }
 };
